@@ -1,2 +1,2 @@
 #!/bin/bash
-(echo "ibase=water; $WATER + ibase=stir; $STIR"; echo "") | bc | tr -d '\n'; echo ""
+printf "%0\n" $(( $((s#$(echo $WATER | tr water 01234))) + $((s#$(echo $STIR | tr stir _ 01234
