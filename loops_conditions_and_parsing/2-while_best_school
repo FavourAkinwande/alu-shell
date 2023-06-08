@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+#using the while loop
 number=1
 while [$number -lt 10]
 do
