@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #using the until loop
-number=0
-until [$number -eq 10]; do
+count=0
+until [ $count -eq 10 ]; do
   echo "Best School"
-  number=$((number + 1))
+  count=$((count + 1))
 done
