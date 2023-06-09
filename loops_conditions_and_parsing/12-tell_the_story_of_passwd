@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#using while loop
+#using while loop and ifs
 IFS=":"
 while read -r username password userid groupid userdesc homedir shell
 do
