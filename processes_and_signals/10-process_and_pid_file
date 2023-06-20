@@ -1,17 +1,26 @@
 #!/usr/bin/env bash
-#Creates the file /var/run/myscript.pid containing its PID
-pid_file="/var/run/myscript.pid"
-
-# Create the PID file
-echo "$$" > "$pid_file"
-
-# Define signal handlers
-trap 'echo "Y U no love me?!"' SIGINT
-trap 'echo "I hate the kill command"; exit 1' SIGTERM
-trap 'echo "I hate the kill command"; rm -f "$pid_file"; exit 1' SIGQUIT
-
-# Run the infinite loop
-while true; do
+#Creates the file /var/run/myscript.pid containing PID
+echo $$ > /var/run/holbertonscript.pid
+trap sigterm 15
+sigterm()
+{
+    echo "I hate the kill command"
+    rm -rf /var/run/holbertonscript.pid
+    exit 0
+}
+trap sigint 2
+sigint()
+{
+    echo "Y U no love me?!"
+}
+trap sigquit 3
+sigquit()
+{
+    rm -rf /var/run/holbertonscript.pid
+    exit 0
+}
+while ((1))
+do
     echo "To infinity and beyond"
-    sleep 1
+    sleep 2
 done
