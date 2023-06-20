@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 #Displays a list of currently running processes
-process_info=$(ps axjf)
+process_info=$(ps -eo pid,ppid,time)
 
 # Print the header for the process list
-echo "PID    PPID   PGID   SID    TTY    STAT   COMMAND"
+printf "%-6s %-6s %-10s\n" "PID" "PPID" "TIME"
 
 # Loop through each line of the process information
 while IFS= read -r line; do
     # Print the process information in a user-oriented format
-    echo "$line"
-done <<< "$process_info"i
+    printf "%-6s %-6s %-10s\n" $line
+done <<< "$process_info"
