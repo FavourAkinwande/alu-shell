@@ -1,26 +1,9 @@
 #!/usr/bin/env bash
 #Creates the file /var/run/myscript.pid containing PID
-echo $$ > /var/run/holbertonscript.pid
-trap sigterm 15
-sigterm()
-{
-    echo "I hate the kill command"
-    rm -rf /var/run/holbertonscript.pid
-    exit 0
-}
-trap sigint 2
-sigint()
-{
-    echo "Y U no love me?!"
-}
-trap sigquit 3
-sigquit()
-{
-    rm -rf /var/run/holbertonscript.pid
-    exit 0
-}
-while ((1))
-do
-    echo "To infinity and beyond"
-    sleep 2
-done
+echo $$ >> /var/run/myscript.pid
+
+trap "echo 'I hate the kill command'; rm -rf /var/run/myscript.pid; exit" SIGTERM
+trap "echo 'Y U no love me?!'" SIGINT
+trap "rm -rf /var/run/myscript.pid; exit" SIGQUIT
+
+while :; do echo 'To infinity and beyond'; sleep 2; done
