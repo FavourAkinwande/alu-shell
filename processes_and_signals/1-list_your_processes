@@ -3,7 +3,7 @@
 process_info=$(ps -e -o user,pid,%cpu,%mem,vsz,rss,tty,stat,start,time,command --forest)
 
 # Print the header for the process list
-printf "%-10s %-6s %-4s %-4s %-6s %-6s %-4s %-5s %-5s %-8s %s\n" "USER" "PID" "%CPU" "%MEM" "VSZ" "RSS" "TTY" "STAT" "START" "TIME" "COMMAND"
+printf "%-10s %-6s %-4s %-4s %-6s %-6s %-4s %-5s %-9s %-8s %s\n" "USER" "PID" "%CPU" "%MEM" "VSZ" "RSS" "TTY" "STAT" "STARTED" "TIME" "COMMAND"
 
 # Loop through each line of the process information
 while IFS= read -r line; do
