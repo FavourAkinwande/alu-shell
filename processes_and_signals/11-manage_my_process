@@ -1,38 +1,36 @@
 #!/usr/bin/env bash
 #ndefinitely writes I am alive! to the file /tmp/my_process
-#!/bin/bash
 
-pid_file="/var/run/my_process.pid"
-log_file="/tmp/my_process"
+if [ "$#" -ne 1 ]
+then
+    echo "Usage: manage_my_process {start|stop|restart}"
+    exit $?
+fi
 
-case $1 in
-    start)
-        if [ -f "$pid_file" ]; then
-            echo "manage_my_process is already running."
-        else
-            nohup bash -c "while true; do echo 'I am alive!'; sleep 2; done >> $log_file & echo \$! > $pid_file" >/dev/null 2>&1 &
-            echo "manage_my_process started."
-        fi
-        ;;
-    stop)
-        if [ -f "$pid_file" ]; then
-            kill "$(cat $pid_file)"
-            rm -f "$pid_file"
-            echo "manage_my_process stopped."
-        else
-            echo "manage_my_process is not running."
-        fi
-        ;;
-    restart)
-        if [ -f "$pid_file" ]; then
-            kill "$(cat $pid_file)"
-            rm -f "$pid_file"
-        fi
-        nohup bash -c "while true; do echo 'I am alive!'; sleep 2; done >> $log_file & echo \$! > $pid_file" >/dev/null 2>&1 &
-        echo "manage_my_process restarted."
-        ;;
-    *)
-        echo "Usage: manage_my_process {start|stop|restart}"
-        ;;
-esac
+if [ "$1" != "start" ] && [ "$1" != "stop" ] && [ "$1" != "restart" ]
+then
+    echo "Usage: manage_my_process {start|stop|restart}"
+    exit $?
+fi
 
+if [ "$1" == "start" ]
+then
+    ./manage_my_process &
+    echo "$!" > /var/run/my_process.pid
+    echo "manage_my_process started"
+
+elif [ "$1" == "stop" ]
+then
+    kill "$(cat /var/run/my_process.pid)"
+    rm /var/run/my_process.pid
+    echo "manage_my_process stopped"
+
+elif [ "$1" == "restart" ]
+then
+    kill "$(cat /var/run/my_process.pid)"
+    rm /var/run/my_process.pid
+    ./manage_my_process &
+    echo "$!" > /var/run/my_process.pid
+    echo "manage_my_process restarted"
+
+fi
