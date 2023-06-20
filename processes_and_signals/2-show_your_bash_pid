@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+#bash process
+ps_output=$(ps -ef)
+
+# Filter the lines containing the word "bash"
+bash_lines=$(echo "$ps_output" | grep bash)
+
+# Extract the PID from the filtered lines
+bash_pid=$(echo "$bash_lines" | awk '{print $2}')
+
+# Print the lines containing "bash"
+echo "$bash_lines"
+
+# Print the extracted PID
+echo "Here we can see that my Bash PID is $bash_pid."
